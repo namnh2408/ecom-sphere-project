@@ -33,6 +33,7 @@ public class CatalogDbContext : DbContext
             builder.OwnsOne(p => p.Sku, eo =>
             {
                 eo.Property(s => s.Value).HasColumnName("Sku").IsRequired().HasMaxLength(50);
+                eo.HasIndex(s => s.Value).IsUnique();
             });
 
             // Own the Price value object
@@ -53,8 +54,7 @@ public class CatalogDbContext : DbContext
                 eo.Property(s => s.Quantity).HasColumnName("StockQuantity").IsRequired();
             });
 
-            // Add indexes
-            builder.HasIndex(p => p.Sku).IsUnique();
+            // Add indexes (note: Sku index is handled via owned value object configuration)
             builder.HasIndex(p => p.CategoryId);
             builder.HasIndex(p => p.Status);
             builder.HasIndex(p => new { p.IsDeleted, p.Status });
