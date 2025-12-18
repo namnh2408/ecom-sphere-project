@@ -1,0 +1,13 @@
+using BuildingBlocks.Abstractions;
+
+namespace Catalog.Domain.DomainEvents;
+
+/// <summary>
+/// Domain event raised when a category is created
+/// </summary>
+public record CategoryCreatedDomainEvent(
+    Guid CategoryId,
+    string Name,
+    string? Description,
+    DateTime OccurredOnUtc
+) : IDomainEvent;
