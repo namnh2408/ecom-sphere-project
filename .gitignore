@@ -340,3 +340,19 @@ yarn-error.log*
 .netlify
 .vercel
 package-lock.json*
+
+# ECommerceMS local secrets and generated runtime files
+.env
+.env.*
+!.env.example
+*.local.json
+*.secrets.json
+**/appsettings.Local.json
+**/appsettings.*.local.json
+**/Logs/
+**/logs/
+infra/docker/.env
+infra/docker/docker-compose.override.yml
+
+# Keep documentation text files trackable for this project
+!Docs/**/*.txt

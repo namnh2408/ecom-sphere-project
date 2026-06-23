@@ -78,9 +78,9 @@
 
 | Layer | Technology | Version | Mục đích |
 |---|---|---|---|
-| Runtime | .NET | 9.0 | Nền tảng chính |
-| Web framework | ASP.NET Core | 9.0 | REST API |
-| ORM | Entity Framework Core | 9.x | Database access (write) |
+| Runtime | .NET | 8.0 LTS | Nền tảng chính |
+| Web framework | ASP.NET Core | 8.0 | REST API |
+| ORM | Entity Framework Core | 8.x | Database access (write) |
 | Micro ORM | Dapper | 2.x | Optimized read queries |
 | CQRS | MediatR | 12.x | Command/Query separation |
 | Validation | FluentValidation | 11.x | Request validation |
@@ -277,11 +277,11 @@ dotnet sln add **/*.csproj
 <PackageReference Include="Mapster" Version="7.*" />
 
 <!-- Order.Infrastructure -->
-<PackageReference Include="Microsoft.EntityFrameworkCore.PostgreSQL" Version="9.*" />
+<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.*" />
 <PackageReference Include="Dapper" Version="2.*" />
 
 <!-- Order.API -->
-<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.*" />
+<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.*" />
 <PackageReference Include="Scalar.AspNetCore" Version="1.*" />
 ```
 
@@ -1320,7 +1320,7 @@ Chạy toàn bộ hệ thống bằng 1 lệnh `docker compose up`. Production-l
 **9.1. Dockerfile chuẩn cho .NET service**
 ```dockerfile
 # Multi-stage build
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy csproj và restore trước để tận dụng layer cache
@@ -1336,7 +1336,7 @@ COPY src/ .
 RUN dotnet publish "Services/Order/ECommerceMS.Order.API/ECommerceMS.Order.API.csproj" \
     -c Release -o /app/publish --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 EXPOSE 8080
 
@@ -1923,10 +1923,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup .NET 9
+      - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "9.0.x"
+          dotnet-version: "8.0.x"
 
       - name: Restore
         run: dotnet restore src/Services/Order/ECommerceMS.Order.API/ECommerceMS.Order.API.csproj
